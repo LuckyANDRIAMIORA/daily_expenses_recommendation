@@ -4,10 +4,9 @@
   "description": "daily expenses recommendation",
   "main": "index.js",
   "scripts": {
-    "test:jsdom": "jest --config jest.jsdom.config.js",
-    "test:watch_jsdom": "jest jest --config jest.jsdom.config.js --watch",
-    "test:node": "jest --config jest.node.config.js",
-    "test:watch_node": "jest jest --config jest.node.config.js --watch",
+    "test:jsdom": "jest --config jest.component.config.js",
+    "test:api": "jest --config jest.api.config.js",
+    "test:watch": "jest --watch",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"

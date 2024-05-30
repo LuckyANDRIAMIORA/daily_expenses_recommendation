@@ -7,7 +7,10 @@ const createJestConfig = nextJest({
  
 const config = {
   testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testRegex: [
+    '/__tests__/api/services/.*\\.(ts|js)$',
+  ],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js','<rootDir>/jest.api.setup.js'],
 }
  
 module.exports = createJestConfig(config)
