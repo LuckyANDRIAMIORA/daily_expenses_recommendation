@@ -4,7 +4,10 @@
   "description": "daily expenses recommendation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:jsdom": "jest --config jest.jsdom.config.js",
+    "test:watch_jsdom": "jest jest --config jest.jsdom.config.js --watch",
+    "test:node": "jest --config jest.node.config.js",
+    "test:watch_node": "jest jest --config jest.node.config.js --watch",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
@@ -12,8 +15,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.7",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-mock-extended": "^3.0.7",
+    "prisma": "^5.14.0"
   }
 }
