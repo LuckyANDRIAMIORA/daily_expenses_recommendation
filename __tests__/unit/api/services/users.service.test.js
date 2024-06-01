@@ -1,6 +1,6 @@
-import { create_user, get_user_by_email, get_user_by_user_id, update_user, delete_user } from "../../../pages/api/services/users.service";
-import prisma from "../../../prisma/prisma_client";
-import { custum_error } from "../../../pages/api/services/custum_error";
+import { create_user, get_user_by_email, get_user_by_user_id, update_user, delete_user } from "../../../../pages/api/services/users.service";
+import prisma from "../../../../prisma/prisma_client";
+import { custum_error } from "../../../../pages/api/services/custum_error";
 
 describe("create_user test", () => {
 
