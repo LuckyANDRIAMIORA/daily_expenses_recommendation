@@ -8,8 +8,7 @@ export default async function handler(req, res) {
             res.status(200)
             res.json(new_user);
         } catch (err) {
-            res.status(err.code)
-            res.set(err.message)
+            res.status(err.code).send(err.message)
         }
     } else if (req.method === 'GET') {
         try {
@@ -20,8 +19,7 @@ export default async function handler(req, res) {
             res.status(200)
             res.json(user_found)
         } catch (err) {
-            res.status(err.code)
-            res.set(err.message)
+            res.status(err.code).send(err.message)
         }
 
     } else if (req.method === 'DELETE') {
@@ -29,11 +27,9 @@ export default async function handler(req, res) {
             const { searchParams } = new URL(req.url)
             const user_id = searchParams.get('user_id');
             await delete_user(user_id);
-            res.status(200)
-            res.set('User deleted successfully!')
+            res.status(200).send('User deleted successfully!')
         } catch (err) {
-            res.status(err.code)
-            res.set(err.message)
+            res.status(err.code).send(err.message)
         }
     } else if (req.method === 'PUT') {
         try {
@@ -42,8 +38,7 @@ export default async function handler(req, res) {
             res.status(200)
             res.json(user_updated);
         } catch (err) {
-            res.status(err.code)
-            res.set(err.message)
+            res.status(err.code).send(err.message)
         }
     }
 }

@@ -8,19 +8,16 @@ export default async function handler(req, res) {
             res.status(200);
             res.json(expense_created);
         } catch (error) {
-            res.status(error.code);
-            res.set(error.message);
+            res.status(error.code).send(error.message);
         }
     } else if (req.method === 'DELETE') {
         try {
             const { searchParams } = new URL(req.url)
             const expense_id = searchParams.get('expense_id');
             await delete_expense(expense_id);
-            res.status(200)
-            res.set('Expense deleted successfully!')
+            res.status(200).send('Expense deleted successfully!')
         } catch (err) {
-            res.status(err.code)
-            res.set(err.message)
+            res.status(err.code).send(err.message)
         }
 
     }

@@ -16,6 +16,11 @@ describe('api/routes/expenses test', () => {
 
         const req = { method: 'POST', body: expense };
         const res = { status: jest.fn(), json: jest.fn() };
+        const send = { send: jest.fn() }
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         create_expense.mockResolvedValue(expense);
 
@@ -40,7 +45,12 @@ describe('api/routes/expenses test', () => {
         }
 
         const req = { method: 'POST', body: expense };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn() };
+        const send = { send: jest.fn() }
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         create_expense.mockImplementation(async () => {
             throw custum_error('User not found!', 404)
@@ -49,7 +59,7 @@ describe('api/routes/expenses test', () => {
         handler(req, res).then((data) => {
             expect(create_expense).toHaveBeenCalledWith(expense);
             expect(res.status).toHaveBeenCalledWith(404);
-            expect(res.set).toHaveBeenCalledWith('User not found!');
+            expect(send.send).toHaveBeenCalledWith('User not found!');
         })
 
     })
@@ -61,14 +71,19 @@ describe('api/routes/expenses test', () => {
         const expense_id = '1';
 
         const req = { method: 'DELETE', url: 'http://localhost:3000/api/routes/expenses?expense_id=1' };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn() };
+        const send = { send: jest.fn() }
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         delete_expense.mockImplementation(async () => { });
 
         handler(req, res).then((data) => {
             expect(delete_expense).toHaveBeenCalledWith(expense_id);
             expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.set).toHaveBeenCalledWith('Expense deleted successfully!');
+            expect(send.send).toHaveBeenCalledWith('Expense deleted successfully!');
         })
 
     })
@@ -78,7 +93,12 @@ describe('api/routes/expenses test', () => {
         const expense_id = '1';
 
         const req = { method: 'DELETE', url: 'http://localhost:3000/api/routes/expenses?expense_id=1' };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn() };
+        const send = { send: jest.fn() }
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         delete_expense.mockImplementation(async () => {
             throw custum_error('Expense not found!', 404);
@@ -87,7 +107,7 @@ describe('api/routes/expenses test', () => {
         handler(req, res).then((data) => {
             expect(delete_expense).toHaveBeenCalledWith(expense_id);
             expect(res.status).toHaveBeenCalledWith(404);
-            expect(res.set).toHaveBeenCalledWith('Expense not found!');
+            expect(send.send).toHaveBeenCalledWith('Expense not found!');
         })
 
     })

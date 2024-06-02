@@ -1,4 +1,4 @@
-import { create_user, get_user_by_user_id, delete_user, update_user} from '../../../../pages/api/services/users.service'
+import { create_user, get_user_by_user_id, delete_user, update_user } from '../../../../pages/api/services/users.service'
 import handler from '../../../../pages/api/routes/users'
 import { custum_error } from "../../../../pages/api/services/custum_error";
 
@@ -14,6 +14,11 @@ describe('api/routes/users test', () => {
 
         const req = { method: 'POST', body: user };
         const res = { status: jest.fn(), json: jest.fn() };
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         create_user.mockResolvedValue(user)
 
@@ -36,7 +41,12 @@ describe('api/routes/users test', () => {
         }
 
         const req = { method: 'POST', body: user };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn()};
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         create_user.mockImplementation(async (user) => {
             throw custum_error('Email already in use!', 409)
@@ -45,7 +55,7 @@ describe('api/routes/users test', () => {
         handler(req, res).then(() => {
             expect(create_user).toHaveBeenCalledWith(user);
             expect(res.status).toHaveBeenCalledWith(409);
-            expect(res.set).toHaveBeenCalledWith('Email already in use!');
+            expect(send.send).toHaveBeenCalledWith('Email already in use!');
         })
 
     })
@@ -62,6 +72,11 @@ describe('api/routes/users test', () => {
 
         const req = { method: 'GET', url: 'http://localhost:3000/api/routes/users?user_id=1' };
         const res = { status: jest.fn(), json: jest.fn() };
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         get_user_by_user_id.mockResolvedValue(user)
 
@@ -84,7 +99,12 @@ describe('api/routes/users test', () => {
         const user_id = "1"
 
         const req = { method: 'GET', url: 'http://localhost:3000/api/routes/users?user_id=1' };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn()};
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         get_user_by_user_id.mockImplementation(async () => {
             throw custum_error('User not found!', 404)
@@ -93,7 +113,7 @@ describe('api/routes/users test', () => {
         handler(req, res).then((data) => {
             expect(get_user_by_user_id).toHaveBeenCalledWith(user_id);
             expect(res.status).toHaveBeenCalledWith(404);
-            expect(res.set).toHaveBeenCalledWith('User not found!');
+            expect(send.send).toHaveBeenCalledWith('User not found!');
         })
 
     })
@@ -103,7 +123,12 @@ describe('api/routes/users test', () => {
         const user_id = "1"
 
         const req = { method: 'DELETE', url: 'http://localhost:3000/api/routes/users?user_id=1' };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn()};
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         delete_user.mockImplementation(async () => {
         })
@@ -111,7 +136,7 @@ describe('api/routes/users test', () => {
         handler(req, res).then(() => {
             expect(delete_user).toHaveBeenCalledWith(user_id);
             expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.set).toHaveBeenCalledWith('User deleted successfully!');
+            expect(send.send).toHaveBeenCalledWith('User deleted successfully!');
         })
 
     })
@@ -122,16 +147,21 @@ describe('api/routes/users test', () => {
         const user_id = "1"
 
         const req = { method: 'DELETE', url: 'http://localhost:3000/api/routes/users?user_id=1' };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn()};
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         delete_user.mockImplementation(async () => {
-            throw custum_error('User not found!',404)
+            throw custum_error('User not found!', 404)
         })
 
         handler(req, res).then(() => {
             expect(delete_user).toHaveBeenCalledWith(user_id);
             expect(res.status).toHaveBeenCalledWith(404);
-            expect(res.set).toHaveBeenCalledWith('User not found!');
+            expect(send.send).toHaveBeenCalledWith('User not found!');
         })
 
     })
@@ -149,6 +179,11 @@ describe('api/routes/users test', () => {
 
         const req = { method: 'PUT', body: user };
         const res = { status: jest.fn(), json: jest.fn() };
+        const send = {send: jest.fn()}
+
+        res.status.mockImplementation(() => {
+            return send;
+        })
 
         update_user.mockResolvedValue(user)
 
@@ -171,16 +206,21 @@ describe('api/routes/users test', () => {
         }
 
         const req = { method: 'PUT', body: user };
-        const res = { status: jest.fn(), json: jest.fn(), set: jest.fn() };
+        const res = { status: jest.fn(), json: jest.fn()};
+        const send = {send: jest.fn()}
 
-        update_user.mockImplementation(async()=>{
+        res.status.mockImplementation(() => {
+            return send;
+        })
+
+        update_user.mockImplementation(async () => {
             throw custum_error('Email already in use!', 409)
         })
 
         handler(req, res).then((data) => {
             expect(update_user).toHaveBeenCalledWith(user);
             expect(res.status).toHaveBeenCalledWith(409);
-            expect(res.set).toHaveBeenCalledWith('Email already in use!');
+            expect(send.send).toHaveBeenCalledWith('Email already in use!');
         })
 
     })
