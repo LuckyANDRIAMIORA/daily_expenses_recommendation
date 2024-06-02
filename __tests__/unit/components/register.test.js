@@ -1,5 +1,6 @@
+import { custum_error } from '../../../pages/api/services/custum_error';
 import Register from '../../../pages/components/register';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 
 global.fetch = jest.fn()
 
@@ -28,7 +29,7 @@ describe('Register test ', () => {
 
     })
 
-    test('test form submission', () => {
+    test('should submit form and call fetch with correct parameters',async () => {
         const { getByLabelText, getByText } = render(<Register />)
 
         const email_input = getByLabelText('Email');
@@ -36,14 +37,19 @@ describe('Register test ', () => {
         const password_input = getByLabelText('Password');
         const register_button = getByText('Register')
 
-        global.fetch.mockImplementation(async()=>{})
+        const response = {
+            ok: true
+        }
+        global.fetch.mockResolvedValue(response)
 
-        fireEvent.change(email_input, { target: { value: 'lucky@gmail.com' } });
-        fireEvent.change(username_input, { target: { value: 'Lucky' } });
-        fireEvent.change(password_input, { target: { value: '1234' } });
-        fireEvent.click(register_button);
+        await act(() => {
+            fireEvent.change(email_input, { target: { value: 'lucky@gmail.com' } });
+            fireEvent.change(username_input, { target: { value: 'Lucky' } });
+            fireEvent.change(password_input, { target: { value: '1234' } });
+            fireEvent.click(register_button);
+        })
 
-        expect(global.fetch).toHaveBeenCalledWith('api/routes/users', {
+        expect(global.fetch).toHaveBeenCalledWith('../api/routes/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,4 +61,44 @@ describe('Register test ', () => {
             }),
         })
     })
+
+    test('should submit form and call fetch with incorrect parameters and display error message', async () => {
+        const { getByLabelText, getByText } = render(<Register />)
+
+        const email_input = getByLabelText('Email');
+        const username_input = getByLabelText('Username');
+        const password_input = getByLabelText('Password');
+        const register_button = getByText('Register')
+
+        const response = {
+            ok: false,
+            text: jest.fn().mockResolvedValue('Email already in use!') 
+        };
+
+        global.fetch.mockResolvedValue(response)
+
+        await act(() => {
+            fireEvent.change(email_input, { target: { value: 'lucky@gmail.com' } });
+            fireEvent.change(username_input, { target: { value: 'Lucky' } });
+            fireEvent.change(password_input, { target: { value: '1234' } });
+            fireEvent.click(register_button);
+        });
+
+        expect(global.fetch).toHaveBeenCalledWith('../api/routes/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_email: 'lucky@gmail.com',
+                user_name: 'Lucky',
+                user_password: '1234'
+            }),
+        })
+
+        const error_message = document.getElementById('error_message');
+        expect(error_message).toHaveTextContent('Email already in use!')
+
+    })
+
 })

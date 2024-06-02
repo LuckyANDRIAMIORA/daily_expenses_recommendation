@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, act } from 'react';
 
 export default function Register() {
 
     const [email_input, set_email] = useState('')
     const [username_input, set_username] = useState('')
     const [password_input, set_password] = useState('')
+    const [error_message, set_error_message] = useState('')
 
     const register = async (e) => {
         e.preventDefault();
@@ -13,13 +14,22 @@ export default function Register() {
             user_name: username_input,
             user_password: password_input
         }
-        fetch('api/routes/users', {
+        const res = await fetch('../api/routes/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
         })
+
+        if (!res.ok) {
+            const message = await res.text()
+            act(() => {
+                set_error_message(message)
+            })
+        } else {
+            
+        }
     }
 
     return (
@@ -55,6 +65,7 @@ export default function Register() {
                         /><br />
                         <button type='submit'>Register</button>
                     </form>
+                    <div id='error_message'>{error_message}</div>
                 </div>
             </div>
         </>
