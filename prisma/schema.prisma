@@ -9,12 +9,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Users {
-  user_id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id           String   @id @default(cuid())
   user_email        String   @unique
   user_name         String?
   user_password     String
@@ -22,10 +22,10 @@ model Users {
 }
 
 model Expenses {
-  expense_id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  expense_id       Int    @id @default(autoincrement())
   expense_name     String
   value            Int
   price            Int
   user             Users      @relation(fields: [user_id], references: [user_id])
-  user_id String    @db.ObjectId
+  user_id String   
 }
