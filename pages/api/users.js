@@ -1,4 +1,4 @@
-import { get_user_by_id, delete_user} from "../services/users.service";
+import { get_user_by_id, delete_user} from "../../services/users.service";
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {

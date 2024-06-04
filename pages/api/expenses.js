@@ -1,4 +1,4 @@
-import { create_expense, delete_expense } from '../services/expenses.service'
+import { create_expense, delete_expense } from '../../services/expenses.service'
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {

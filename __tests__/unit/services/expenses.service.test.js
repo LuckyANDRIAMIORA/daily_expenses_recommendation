@@ -1,6 +1,6 @@
-import prisma from "../../../../prisma/prisma_client";
-import { custum_error } from "../../../../pages/api/services/custum_error";
-import { create_expense, delete_expense } from "../../../../pages/api/services/expenses.service";
+import prisma from "../../../prisma/prisma_client";
+import { custum_error } from "../../../services/custum_error";
+import { create_expense, delete_expense } from "../../../services/expenses.service";
 
 
 describe("create_expense test", () => {

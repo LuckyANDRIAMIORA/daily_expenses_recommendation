@@ -1,4 +1,4 @@
-import prisma from '../../../prisma/prisma_client';
+import prisma from '../prisma/prisma_client';
 import { custum_error } from './custum_error';
 
 export const get_user_by_email = async (email) => {

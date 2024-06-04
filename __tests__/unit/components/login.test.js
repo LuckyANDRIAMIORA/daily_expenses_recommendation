@@ -1,4 +1,4 @@
-import Login from '../../../pages/components/login';
+import Login from '../../../components/login';
 import { signIn } from 'next-auth/react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 

@@ -1,6 +1,6 @@
-import {get_user_by_email, get_user_by_id, delete_user } from "../../../../pages/api/services/users.service";
-import prisma from "../../../../prisma/prisma_client";
-import { custum_error } from "../../../../pages/api/services/custum_error";
+import {get_user_by_email, get_user_by_id, delete_user } from "../../../services/users.service";
+import prisma from "../../../prisma/prisma_client";
+import { custum_error } from "../../../services/custum_error";
 
 
 describe("get_user_by_email test", () => {

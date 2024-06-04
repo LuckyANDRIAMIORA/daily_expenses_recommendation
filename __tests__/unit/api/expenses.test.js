@@ -1,6 +1,6 @@
-import { create_expense, delete_expense } from '../../../../pages/api/services/expenses.service'
-import handler from '../../../../pages/api/routes/expenses'
-import { custum_error } from "../../../../pages/api/services/custum_error";
+import { create_expense, delete_expense } from '../../../services/expenses.service'
+import handler from '../../../pages/api/expenses'
+import { custum_error } from "../../../services/custum_error";
 
 describe('api/routes/expenses test', () => {
 

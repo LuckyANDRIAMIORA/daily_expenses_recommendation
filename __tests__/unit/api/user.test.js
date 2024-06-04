@@ -1,6 +1,6 @@
-import { get_user_by_id, delete_user } from '../../../../pages/api/services/users.service'
-import handler from '../../../../pages/api/routes/users'
-import { custum_error } from "../../../../pages/api/services/custum_error";
+import { get_user_by_id, delete_user } from '../../../services/users.service'
+import handler from '../../../pages/api/users'
+import { custum_error } from "../../../services/custum_error";
 
 describe('api/routes/users test', () => {
     test('api/routes/users/${id} with GET method should call get_user_by_id of users.service with existing id and send the user back wihtout exposing the password of the user with http code 200.', () => {
