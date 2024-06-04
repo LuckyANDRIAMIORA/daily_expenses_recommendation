@@ -23,7 +23,7 @@ describe("create_expense test", () => {
                     price: 1000,
                     user: {
                         connect: {
-                            user_id: '1'
+                            id: '1'
                         }
                     }
                 }
@@ -58,7 +58,7 @@ describe("create_expense test", () => {
                 price: 1000,
                 user: {
                     connect: {
-                        user_id: '1'
+                        id: '1'
                     }
                 }
             }

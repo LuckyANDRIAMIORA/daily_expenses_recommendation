@@ -1,13 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Home() {
-    const [message, setMessage] = useState('');
-    useEffect(()=>{
-        fetch('/api/hello')
-        .then(res=>res.json())
-        .then((data)=>{
-            setMessage(data.message);
-        })
-    },[])
-    return <h1>{message}</h1>;
+    const { data: session } = useSession();
+
+    if (session) {
+        return (
+            <>
+                Signed in as {session.user.email} <br />
+                <button onClick={() => signOut()}>Sign out</button>
+            </>
+        );
+    }
+
+    return (
+        <>
+            Not signed in <br />
+            <button onClick={() => signIn()}>Sign in</button>
+        </>
+    );
 }

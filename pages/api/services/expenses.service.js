@@ -10,7 +10,7 @@ export const create_expense = async (expense) => {
                 price: expense.price,
                 user: {
                     connect: {
-                        user_id: expense.user_id
+                        id: expense.user_id
                     }
                 }
             }
