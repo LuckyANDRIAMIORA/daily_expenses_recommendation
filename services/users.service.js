@@ -4,7 +4,7 @@ import { custum_error } from './custum_error';
 export const get_user_by_email = async (email) => {
 
     try {
-        const user = await prisma.Users.findUnique({
+        const user = await prisma.User.findUnique({
             where: {
                 email: email
             }
@@ -21,7 +21,7 @@ export const get_user_by_email = async (email) => {
 export const get_user_by_id = async (id) => {
 
     try {
-        const user = await prisma.Users.findUnique({
+        const user = await prisma.User.findUnique({
             where: {
                 id: id
             }
@@ -31,13 +31,13 @@ export const get_user_by_id = async (id) => {
 
     } catch (error) {
         if (error.code === 'P2001') throw custum_error('User not found!', 404)
-        throw custum_error('Something went wrong!', 500)
+        throw custum_error(error.message, 500)
     }
 }
 
 export const delete_user = async (id) => {
     try {
-        await prisma.Users.delete({
+        await prisma.User.delete({
             where: {
                 id: id
             }

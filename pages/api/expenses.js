@@ -12,9 +12,8 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'DELETE') {
         try {
-            const { searchParams } = new URL(req.url)
-            const expense_id = searchParams.get('expense_id');
-            await delete_expense(expense_id);
+            const {expense_id} = req.query
+            await delete_expense(parseInt(expense_id));
             res.status(200).send('Expense deleted successfully!')
         } catch (err) {
             res.status(err.code).send(err.message)

@@ -1,5 +1,6 @@
 import { useSession, signOut } from 'next-auth/react';
 import Login from '../components/login';
+import User_profile from '../components/user_profile';
 
 export default function Home() {
     const { data: session } = useSession();
@@ -7,7 +8,7 @@ export default function Home() {
     if (session) {
         return (
             <>
-                Signed in as {session.user.email} <br />
+                <User_profile user={session.user}/>
                 <button onClick={() => signOut()}>Sign out</button>
             </>
         );

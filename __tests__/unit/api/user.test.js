@@ -11,7 +11,7 @@ describe('api/routes/users test', () => {
             email: 'lucky@gmail.com',
         }
 
-        const req = { method: 'GET', url: 'http://localhost:3000/api/routes/users?id=1' };
+        const req = { method: 'GET', query: {id:user.id} };
         const res = { status: jest.fn(), json: jest.fn() };
         const send = { send: jest.fn() }
 
@@ -38,7 +38,7 @@ describe('api/routes/users test', () => {
 
         const id = "1"
 
-        const req = { method: 'GET', url: 'http://localhost:3000/api/routes/users?id=1' };
+        const req = { method: 'GET', query: {id:id} };
         const res = { status: jest.fn(), json: jest.fn() };
         const send = { send: jest.fn() }
 
@@ -62,7 +62,7 @@ describe('api/routes/users test', () => {
 
         const id = "1"
 
-        const req = { method: 'DELETE', url: 'http://localhost:3000/api/routes/users?id=1' };
+        const req = { method: 'DELETE', query: {id:id} };
         const res = { status: jest.fn(), json: jest.fn() };
         const send = { send: jest.fn() }
 
@@ -86,7 +86,7 @@ describe('api/routes/users test', () => {
 
         const id = "1"
 
-        const req = { method: 'DELETE', url: 'http://localhost:3000/api/routes/users?id=1' };
+        const req = { method: 'DELETE', query: {id:id} };
         const res = { status: jest.fn(), json: jest.fn() };
         const send = { send: jest.fn() }
 
