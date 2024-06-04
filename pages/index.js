@@ -1,4 +1,5 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
+import Login from './components/login';
 
 export default function Home() {
     const { data: session } = useSession();
@@ -14,8 +15,7 @@ export default function Home() {
 
     return (
         <>
-            Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
+           <Login/>
         </>
     );
 }

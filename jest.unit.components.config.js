@@ -10,7 +10,7 @@ const config = {
   testRegex: [
     '/__tests__/unit/components/.*\\.(ts|js)$',
   ],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js', '<rootDir>/jest.unit.components.setup.js'],
 }
 
 module.exports = createJestConfig(config)
