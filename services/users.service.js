@@ -1,4 +1,4 @@
-import prisma from '../prisma/prisma_client';
+const prisma = require('../prisma/prisma_client')
 import { custum_error } from './custum_error';
 
 export const get_user_by_email = async (email) => {
@@ -7,6 +7,9 @@ export const get_user_by_email = async (email) => {
         const user = await prisma.User.findUnique({
             where: {
                 email: email
+            },
+            include: {
+                expenses: true
             }
         })
 
@@ -24,6 +27,9 @@ export const get_user_by_id = async (id) => {
         const user = await prisma.User.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                expenses: true
             }
         })
 

@@ -4,6 +4,8 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
             const expense = req.body;
+            expense.value= parseInt(expense.value)
+            expense.price = parseInt(expense.price)
             const expense_created = await create_expense(expense)
             res.status(200);
             res.json(expense_created);

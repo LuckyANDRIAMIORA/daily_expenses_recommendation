@@ -5,6 +5,7 @@ export default function User_profile({user}) {
                 <img src={user.image} alt={user.name}/>
                 <h1>{user.name}</h1>
                 <h2>{user.email}</h2>
+                <h3>{user.id}</h3>
             </div>
         </>
     );

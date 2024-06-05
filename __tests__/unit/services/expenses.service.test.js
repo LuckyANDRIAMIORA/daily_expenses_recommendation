@@ -1,4 +1,4 @@
-import prisma from "../../../prisma/prisma_client";
+const prisma = require('../../../prisma/prisma_client') 
 import { custum_error } from "../../../services/custum_error";
 import { create_expense, delete_expense } from "../../../services/expenses.service";
 

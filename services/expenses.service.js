@@ -1,4 +1,4 @@
-import prisma from '../prisma/prisma_client';
+const prisma = require('../prisma/prisma_client')
 import { custum_error } from './custum_error';
 
 export const create_expense = async (expense) => {
