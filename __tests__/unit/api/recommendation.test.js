@@ -85,7 +85,7 @@ const expenses = [
 describe('recommendation test', () => {
     test('should call recommendation service with the right prameters and send the result with status 200.', async () => {
         const budget = 15
-        const req = { method: 'POST', query: {budget:budget}, body: expenses };
+        const req = { method: 'POST', query: { budget: budget }, body: expenses };
         const res = { status: jest.fn(), json: jest.fn() };
         const send = { send: jest.fn() }
 
@@ -93,41 +93,43 @@ describe('recommendation test', () => {
             return send;
         })
 
-        recommendation.mockResolvedValue({max_value:22, result:[
-            {
-                expense_id: 6,
-                expense_name: 'Item6',
-                value: 6,
-                price: 5,
-                user_id: 1
-            },
-            {
-                expense_id: 5,
-                expense_name: 'Item5',
-                value: 7,
-                price: 4,
-                user_id: 1
-            },
+        recommendation.mockResolvedValue({
+            max_value: 22, result: [
+                {
+                    expense_id: 6,
+                    expense_name: 'Item6',
+                    value: 6,
+                    price: 5,
+                    user_id: 1
+                },
+                {
+                    expense_id: 5,
+                    expense_name: 'Item5',
+                    value: 7,
+                    price: 4,
+                    user_id: 1
+                },
 
-            {
-                expense_id: 4,
-                expense_name: 'Item4',
-                value: 4,
-                price: 3,
-                user_id: 1
-            },
-            {
-                expense_id: 1,
-                expense_name: 'Item1',
-                value: 5,
-                price: 3,
-                user_id: 1
-            }
+                {
+                    expense_id: 4,
+                    expense_name: 'Item4',
+                    value: 4,
+                    price: 3,
+                    user_id: 1
+                },
+                {
+                    expense_id: 1,
+                    expense_name: 'Item1',
+                    value: 5,
+                    price: 3,
+                    user_id: 1
+                }
 
-        ]})
+            ]
+        })
 
-        handler(req, res).then((data)=>{
-            expect(recommendation).toHaveBeenCalledWith(expenses,budget)
+        handler(req, res).then((data) => {
+            expect(recommendation).toHaveBeenCalledWith(expenses, budget)
             expect(res.status).toHaveBeenCalledWith(200)
             expect(res.json).toHaveBeenCalledWith([
                 {
@@ -144,7 +146,7 @@ describe('recommendation test', () => {
                     price: 4,
                     user_id: 1
                 },
-    
+
                 {
                     expense_id: 4,
                     expense_name: 'Item4',
@@ -159,8 +161,9 @@ describe('recommendation test', () => {
                     price: 3,
                     user_id: 1
                 }
-                  
+
             ])
         })
     })
+
 })
