@@ -25,6 +25,5 @@ export const recommendation = async (expenses, budget) => {
         i--;
     }
 
-    console.log(result)
     return { max_value: dp[n][budget], result: result };
 };  
