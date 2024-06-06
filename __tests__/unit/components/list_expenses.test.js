@@ -3,8 +3,16 @@ import List_expenses from '../../../components/list_expenses';
 
 global.fetch = jest.fn();
 
+jest.mock('../../../components/recommendation_list', () => () => <mock-modal data-testid="modal" />)
+
 beforeEach(() => {
     global.fetch.mockClear();
+    jest.resetAllMocks();
+});
+
+afterEach(() => {
+    global.fetch.mockClear();
+    jest.resetAllMocks();
 });
 
 const id = '1'

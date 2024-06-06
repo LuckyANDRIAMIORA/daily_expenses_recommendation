@@ -1,5 +1,6 @@
 import { act } from "@testing-library/react";
 import { useEffect, useState } from "react";
+import Recommendation_list from "./recommendation_list";
 
 export default function List_expenses({ user_id, new_expense }) {
 
@@ -37,6 +38,10 @@ export default function List_expenses({ user_id, new_expense }) {
                             ))
                         }
                     </ul>
+                </div>
+
+                <div>
+                    <Recommendation_list expenses={expenses}/>
                 </div>
 
         </>
