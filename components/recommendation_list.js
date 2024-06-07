@@ -18,14 +18,14 @@ export default function Recommendation_list({ expenses }) {
             body: JSON.stringify(expenses)
         });
 
-        if(!res.ok){
+        if (!res.ok) {
 
-        }else{
-            const result = await res.json()
+        } else {
+            const { max_value, result } = await res.json()
             act(() => {
-                set_recommendation(result.result);
-                set_value(result.max_value)
-            })    
+                set_recommendation(result);
+                set_value(max_value)
+            })
         }
 
     }
@@ -36,29 +36,53 @@ export default function Recommendation_list({ expenses }) {
                 <div>
                     <h1>Recommendation</h1>
                 </div>
-                <div>
+                <div className="card w-96 bg-base-100 p-5">
                     <form onSubmit={submit_form}>
-                        <label htmlFor="budget">budget</label>
-                        <input
-                            type="number"
-                            name="budget"
-                            value={budget}
-                            onChange={(e) => { set_budget(e.target.value) }}
-                            id="budget" />
-                        <button type="submit">submit</button>
+                        <label className="input input-bordered mb-5 flex items-center gap-2" htmlFor="budget">
+                            budget:
+                            <input
+                                className="grow" placeholder="0"
+                                type="number"
+                                name="budget"
+                                value={budget}
+                                onChange={(e) => { set_budget(e.target.value) }}
+                                id="budget" />
+                        </label>
+                        <div className="card-actions justify-end">
+                            <button className="btn btn-outline btn-sm px-10" type="submit">submit</button>
+                        </div>
                     </form>
                 </div>
                 <div>
                     <h1>Recommendation list</h1>
                 </div>
                 <div>
-                    <ul id="expenses_list">
-                        {
-                            expenses.map((expense, key) => (
-                                <li key={key}>{expense.expense_name}</li>
-                            ))
-                        }
-                    </ul>
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            {/* head */}
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>expense</th>
+                                    <th>value</th>
+                                    <th>price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    recommendation_list.map((expense, key) => (
+                                        <tr key={key}>
+                                            <th>{expense.expense_id}</th>
+                                            <td>{expense.expense_name}</td>
+                                            <td>{expense.value}</td>
+                                            <td>{expense.price}</td>
+                                        </tr>
+                                    ))
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </>

@@ -6,9 +6,9 @@ export default async function handler(req, res) {
             const expenses = req.body
             const { budget } = req.query
 
-            const result = await recommendation(expenses, budget)
+            const result = await recommendation(expenses, parseInt(budget))
             res.status(200)
-            res.json(result.result)
+            res.json(result)
         } catch (error) {
             res.status(error.code).send(error.message);
         }

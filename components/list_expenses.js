@@ -29,20 +29,39 @@ export default function List_expenses({ user_id, new_expense }) {
 
     return (
         <>
-                <div>
-                    <h1>Expenses list</h1>
-                    <ul id="expenses_list">
-                        {
-                            expenses.map((expense, key) => (
-                                <li key={key}>{expense.expense_name}</li>
-                            ))
-                        }
-                    </ul>
-                </div>
+            <div>
+                <h1>Expenses list</h1>
+                <div className="overflow-x-auto">
+                    <table className="table">
+                        {/* head */}
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>expense</th>
+                                <th>value</th>
+                                <th>price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                expenses.map((expense, key) => (
+                                    <tr key={key}>
+                                        <th>{expense.expense_id}</th>
+                                        <td>{expense.expense_name}</td>
+                                        <td>{expense.value}</td>
+                                        <td>{expense.price}</td>
+                                    </tr>
+                                ))
+                            }
 
-                <div>
-                    <Recommendation_list expenses={expenses}/>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+
+            <div>
+                <Recommendation_list expenses={expenses} />
+            </div>
 
         </>
     );
