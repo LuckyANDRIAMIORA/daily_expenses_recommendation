@@ -1,13 +1,11 @@
 import { act } from "@testing-library/react";
 import { useState } from "react";
-import List_expenses from "./list_expenses";
 
-export default function Expenses_form({ id }) {
+export default function Expenses_form({ id, set_new_expense }) {
 
     const [expense_name, set_expense_name] = useState('')
     const [value, set_value] = useState(0)
     const [price, set_price] = useState(0)
-    const [new_expense, set_expenses] = useState({})
 
     const add_expense = async (e) => {
         e.preventDefault()
@@ -29,12 +27,12 @@ export default function Expenses_form({ id }) {
         if (!res.ok) {
 
         } else {
-            set_expense_name('')
-            set_price(0)
-            set_value(0)
             const new_expense = await res.json();
             act(() => {
-                set_expenses(new_expense)
+                set_expense_name('')
+                set_price(0)
+                set_value(0)
+                set_new_expense(new_expense)
             })
         }
 
@@ -42,8 +40,8 @@ export default function Expenses_form({ id }) {
 
     return (
         <>
-            <div className="card w-96 bg-base-100 p-5">
-                <h1 className="mb-5">Add new expense</h1>
+            <div className="card w-96 bg-base-100 p-5 shadow-md">
+                <h1 className="mb-5 card-title">Add new expense</h1>
                 <form onSubmit={add_expense}>
                     <label className="input input-bordered mb-5 flex items-center gap-2" htmlFor="expense_name">
                         expense:
@@ -85,9 +83,7 @@ export default function Expenses_form({ id }) {
                     </div>
                 </form>
             </div>
-            <div>
-                <List_expenses user_id={id} new_expense={new_expense} />
-            </div>
+
         </>
     );
 }

@@ -25,6 +25,7 @@ export default function Recommendation_list({ expenses }) {
             act(() => {
                 set_recommendation(result);
                 set_value(max_value)
+                set_budget(0)
             })
         }
 
@@ -32,11 +33,11 @@ export default function Recommendation_list({ expenses }) {
 
     return (
         <>
-            <div>
+            <div className="card w-96 bg-base-100 p-5 shadow-md">
                 <div>
-                    <h1>Recommendation</h1>
+                    <h1 className="card-title">Recommendation</h1>
                 </div>
-                <div className="card w-96 bg-base-100 p-5">
+                <div className="card w-auto bg-base-100 p-5">
                     <form onSubmit={submit_form}>
                         <label className="input input-bordered mb-5 flex items-center gap-2" htmlFor="budget">
                             budget:
@@ -54,11 +55,8 @@ export default function Recommendation_list({ expenses }) {
                     </form>
                 </div>
                 <div>
-                    <h1>Recommendation list</h1>
-                </div>
-                <div>
-                    <div className="overflow-x-auto">
-                        <table className="table">
+                    <div className="overflow-x-auto h-60">
+                        <table className="table table-pin-rows">
                             {/* head */}
                             <thead>
                                 <tr>

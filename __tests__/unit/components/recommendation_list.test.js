@@ -90,7 +90,7 @@ const expenses = [
 
 const budget = 15
 
-const result={
+const result = {
     max_value: 22, result: [
         {
             expense_id: 6,
@@ -125,35 +125,45 @@ const result={
     ]
 }
 
-describe('recommendaton_list test', () => {
-    test('should display a form with budget as input', () => {
-        const { getByLabelText, getByText } = render(<Recommendation_list expenses={expenses} />)
+const res = {
+    ok: true,
+    json: async () => {
+        return result
+    },
+    text: async () => { return '' }
+}
 
-        const budget_input = getByLabelText('budget')
-        const budget_button = getByText('submit')
+describe('recommendaton_list test', () => {
+    test('should display a form with budget as input', async () => {
+
+        await act(() => {
+            render(<Recommendation_list expenses={expenses} />)
+        })
+
+        const budget_input = screen.getByLabelText(/budget:/i);
+        const budget_button = screen.getByText('submit')
 
         expect(budget_input).toBeInTheDocument()
         expect(budget_button).toBeInTheDocument()
     })
 
-    test('should call api/recommendation when form submit', () => {
-        const { getByLabelText, getByText } = render(<Recommendation_list expenses={expenses} />)
 
-        const budget_input = getByLabelText('budget')
-        const budget_button = getByText('submit')
+    test('should call api/recommendation when form submit', async () => {
 
-        const res = {
-            ok: true,
-            json: async () => {
-                return result
-            },
-            text: async () => { return '' }
-        }
+        await act(() => {
+            render(<Recommendation_list expenses={expenses} />)
+        })
+
+        const budget_input = screen.getByLabelText(/budget:/i);
+        const budget_button = screen.getByText('submit')
 
         global.fetch.mockResolvedValue(res)
 
-        fireEvent.change(budget_input, { target: { value: 15 } })
-        fireEvent.click(budget_button)
+        await act(() => {
+            fireEvent.change(budget_input, { target: { value: 15 } })
+            fireEvent.click(budget_button)
+        })
+
         expect(global.fetch).toHaveBeenCalledWith('/api/recommendation?budget=' + budget, {
             method: 'POST',
             headers: {

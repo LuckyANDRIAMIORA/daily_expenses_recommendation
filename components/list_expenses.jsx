@@ -1,10 +1,7 @@
 import { act } from "@testing-library/react";
-import { useEffect, useState } from "react";
-import Recommendation_list from "./recommendation_list";
+import { useEffect } from "react";
 
-export default function List_expenses({ user_id, new_expense }) {
-
-    const [expenses, set_expenses] = useState([]);
+export default function List_expenses({ user_id, new_expense, expenses, set_expenses }) {
 
     const fetch_data = async () => {
         const res = await fetch('/api/users?id=' + user_id, {
@@ -29,10 +26,10 @@ export default function List_expenses({ user_id, new_expense }) {
 
     return (
         <>
-            <div>
-                <h1>Expenses list</h1>
-                <div className="overflow-x-auto">
-                    <table className="table">
+            <div className="card w-96 bg-base-100 p-5 shadow-md">
+                <h1 className="card-title">Expenses list</h1>
+                <div className="overflow-x-auto h-96">
+                    <table className="table table-pin-rows">
                         {/* head */}
                         <thead>
                             <tr>
@@ -57,10 +54,6 @@ export default function List_expenses({ user_id, new_expense }) {
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <div>
-                <Recommendation_list expenses={expenses} />
             </div>
 
         </>

@@ -1,9 +1,11 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import List_expenses from '../../../components/list_expenses';
 
 global.fetch = jest.fn();
 
 jest.mock('../../../components/recommendation_list', () => () => <mock-modal data-testid="modal" />)
+
+const set_expenses = jest.fn()
 
 beforeEach(() => {
     global.fetch.mockClear();
@@ -66,7 +68,9 @@ describe("expenses list test", () => {
 
         global.fetch.mockResolvedValue(res);
 
-        const { getByText } = render(<List_expenses user_id={id} new_expense={expense} />)
+        await act(() => {
+            render(<List_expenses user_id={id} new_expense={expense} expenses={[]} set_expenses={set_expenses} />)
+        })
 
         expect(global.fetch).toHaveBeenCalledWith('/api/users?id=' + id, {
             method: 'GET',
@@ -74,6 +78,8 @@ describe("expenses list test", () => {
                 'Content-Type': 'application/json', // Add any other necessary headers here
             },
         })
+
+        expect(set_expenses).toHaveBeenCalled()
 
     })
 })

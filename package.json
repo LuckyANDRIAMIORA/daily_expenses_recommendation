@@ -9,7 +9,8 @@
     "test:unit.routes": "jest --config jest.unit.routes.config.js --watch",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "deploy": "npx prisma migrate deploy",
+    "start": "npx prisma generate && next start"
   },
   "author": "",
   "license": "ISC",
