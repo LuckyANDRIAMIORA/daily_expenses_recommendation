@@ -1,4 +1,3 @@
-import { act } from "@testing-library/react";
 import { useEffect } from "react";
 
 export default function List_expenses({ user_id, new_expense, expenses, set_expenses }) {
@@ -15,7 +14,7 @@ export default function List_expenses({ user_id, new_expense, expenses, set_expe
 
         } else {
             const user = await res.json()
-            act(() => set_expenses(user.expenses))
+            set_expenses(user.expenses)
         }
 
     }

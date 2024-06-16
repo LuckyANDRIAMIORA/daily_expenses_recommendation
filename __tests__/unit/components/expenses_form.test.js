@@ -54,7 +54,7 @@ describe("expenses_list test", () => {
 
     test("should call fetch with expense_name, value, price and user_id as params", async () => {
 
-        await act(() => {
+        await act(async() => {
             render(<Expenses_form id={id} set_new_expense={set_new_expense} />)
         })
 
@@ -66,7 +66,7 @@ describe("expenses_list test", () => {
 
         global.fetch.mockResolvedValue(res);
 
-        await act(() => {
+        await act(async () => {
 
             fireEvent.change(expense_name, { target: { value: 'stuff' } });
             fireEvent.change(value, { target: { value: 1 } });

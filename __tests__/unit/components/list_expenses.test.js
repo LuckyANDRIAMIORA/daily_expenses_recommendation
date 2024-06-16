@@ -68,7 +68,7 @@ describe("expenses list test", () => {
 
         global.fetch.mockResolvedValue(res);
 
-        await act(() => {
+        await act(async() => {
             render(<List_expenses user_id={id} new_expense={expense} expenses={[]} set_expenses={set_expenses} />)
         })
 

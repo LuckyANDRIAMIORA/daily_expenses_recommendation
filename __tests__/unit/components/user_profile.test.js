@@ -10,7 +10,7 @@ const user = {
 
 describe('User_profile test', () => {
     test('should display user information', async () => {
-        await act(() => {
+        await act( async() => {
             render(<User_profile user={user} />)
         })
 

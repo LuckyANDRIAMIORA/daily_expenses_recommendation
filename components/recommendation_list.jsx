@@ -1,16 +1,15 @@
 import { useState } from "react"
-import { act } from "@testing-library/react"
+import { useForm } from "react-hook-form";
 
 export default function Recommendation_list({ expenses }) {
 
-    const [budget, set_budget] = useState(0)
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [recommendation_list, set_recommendation] = useState([])
     const [total_value, set_value] = useState(0)
 
-    const submit_form = async (e) => {
-        e.preventDefault()
+    const submit_form = async data => {
 
-        const res = await fetch('/api/recommendation?budget=' + budget, {
+        const res = await fetch('/api/recommendation?budget=' + data.budget, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Add any other necessary headers here
@@ -22,11 +21,8 @@ export default function Recommendation_list({ expenses }) {
 
         } else {
             const { max_value, result } = await res.json()
-            act(() => {
-                set_recommendation(result);
-                set_value(max_value)
-                set_budget(0)
-            })
+            set_recommendation(result);
+            set_value(max_value)
         }
 
     }
@@ -38,17 +34,20 @@ export default function Recommendation_list({ expenses }) {
                     <h1 className="card-title">Recommendation</h1>
                 </div>
                 <div className="card w-auto bg-base-100 p-5">
-                    <form onSubmit={submit_form}>
+                    <form onSubmit={handleSubmit(submit_form)}>
                         <label className="input input-bordered mb-5 flex items-center gap-2" htmlFor="budget">
                             budget:
                             <input
                                 className="grow" placeholder="0"
                                 type="number"
                                 name="budget"
-                                value={budget}
-                                onChange={(e) => { set_budget(e.target.value) }}
-                                id="budget" />
+                                id="budget"
+                                {...register('budget', {
+                                    validate: value => parseInt(value, 10) > 0 || 'budget must be greater than 0'
+                                })}
+                            />
                         </label>
+                        {errors.budget?.message && <p className="text-red-600">{errors.budget.message}</p>}
                         <div className="card-actions justify-end">
                             <button className="btn btn-outline btn-sm px-10" type="submit">submit</button>
                         </div>

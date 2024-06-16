@@ -150,7 +150,7 @@ describe('recommendaton_list test', () => {
 
     test('should call api/recommendation when form submit', async () => {
 
-        await act(() => {
+        await act(async() => {
             render(<Recommendation_list expenses={expenses} />)
         })
 
@@ -159,7 +159,7 @@ describe('recommendaton_list test', () => {
 
         global.fetch.mockResolvedValue(res)
 
-        await act(() => {
+        await act(async() => {
             fireEvent.change(budget_input, { target: { value: 15 } })
             fireEvent.click(budget_button)
         })

@@ -5,7 +5,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 describe('Login test', () => {
     test('should call signIn', async () => {
 
-        await act(() => {
+        await act(async() => {
             render(<Login />)
         })
 
