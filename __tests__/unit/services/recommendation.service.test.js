@@ -99,7 +99,7 @@ test("take list of items that has value and price a returning the best combinati
             price: 4,
             user_id: 1
         },
-        
+
         {
             expense_id: 4,
             expense_name: 'Item4',
@@ -117,5 +117,8 @@ test("take list of items that has value and price a returning the best combinati
 
     ])
 
+    expect(result.max_value).toEqual(22);
+
+    expect(result.total_price).toEqual(15);
 })
 

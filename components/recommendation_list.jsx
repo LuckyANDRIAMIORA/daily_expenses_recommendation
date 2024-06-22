@@ -6,6 +6,8 @@ export default function Recommendation_list({ expenses }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [recommendation_list, set_recommendation] = useState([])
     const [total_value, set_value] = useState(0)
+    const [total_price, set_total_price] = useState(0)
+    const [budget, set_budget] = useState(0)
 
     const submit_form = async data => {
 
@@ -20,9 +22,11 @@ export default function Recommendation_list({ expenses }) {
         if (!res.ok) {
 
         } else {
-            const { max_value, result } = await res.json()
+            const { max_value, result, total_price } = await res.json()
             set_recommendation(result);
             set_value(max_value)
+            set_total_price(total_price)
+            set_budget(data.budget)
         }
 
     }
@@ -47,14 +51,14 @@ export default function Recommendation_list({ expenses }) {
                                 })}
                             />
                         </label>
-                        {errors.budget?.message && <p className="text-red-600">{errors.budget.message}</p>}
+                        {errors.budget?.message && <p className="text-red-600 pb-1">{errors.budget.message}</p>}
                         <div className="card-actions justify-end">
                             <button className="btn btn-outline btn-sm px-10" type="submit">submit</button>
                         </div>
                     </form>
                 </div>
                 <div>
-                    <div className="overflow-x-auto h-60">
+                    <div className="overflow-x-auto h-56">
                         <table className="table table-pin-rows">
                             {/* head */}
                             <thead>
@@ -79,6 +83,14 @@ export default function Recommendation_list({ expenses }) {
 
                             </tbody>
                         </table>
+                    </div>
+                    <div className="flex flex-wrap flex-row justify-between">
+                        <div>
+                            <p>total price: {total_price}</p>
+                        </div>
+                        <div>
+                            <p>rest: {budget - total_price}</p>
+                        </div>
                     </div>
                 </div>
             </div>

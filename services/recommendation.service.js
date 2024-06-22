@@ -19,16 +19,18 @@ export const recommendation = async (expenses, budget) => {
     
         let i = n;
         let j = budget;
-    
+        let total_price = 0;
+
         while (i > 0 && j > 0) {
             if (dp[i][j] !== dp[i - 1][j]) {
                 result.push(expenses[i - 1]);
+                total_price += expenses[i - 1].price;
                 j -= expenses[i - 1].price;
             }
             i--;
         }
     
-        return { max_value: dp[n][budget], result: result };
+        return { max_value: dp[n][budget], result: result, total_price: total_price };
             
     } catch (error) {
         throw custum_error('Invalid data input', 404)
